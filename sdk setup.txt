@@ -1,0 +1,108 @@
+
+Embedded Signup code setup
+Sequence of steps to implement the Embedded Signup flow code.
+Load the JS SDK using the code given in JavaScript SDK section.
+Follow the previous step to set up the MessageEvent listener for receiving the session info. This listener will be executed when the user completes the flow. You should store the WhatsApp business account and phone IDs locally to start the integration.
+window.addEventListener('message', (event) => {/* store the data from this event in local state */});
+Set up a callback function to be called when the user completes the flow using Facebook for Business Login. You will receive a code from Embedded Signup that you will need to exchange for a token. When sending this code to your backend, pass the WABA and Phone IDs along to start the integration.
+const fbLoginCallback = (response) => {
+  if (response.authResponse) {
+    const code = response.authResponse.code;
+    // The returned code must be transmitted to your backend first and then
+    // perform a server-to-server call from there to our servers for an access token.
+  }
+}
+Set up a method to be called on user click to open the Embedded Signup flow. Change your selection in the next step to get the exact code to use.
+const launchWhatsAppSignup = () => {
+  // Launch Facebook login
+  FB.login(fbLoginCallback, {
+    config_id: '835533898820237', // configuration ID goes here
+    response_type: 'code', // must be set to 'code' for System User access token
+    override_default_response_type: true, // when true, any response types passed in the "response_type" will take precedence over the default types
+    extras: {"version":"v3"}
+  });
+}
+Add a button to your page to open the Embedded Signup flow.
+<button onclick="launchWhatsAppSignup()" style="background-color: #1877f2; border: 0; border-radius: 4px; color: #fff; cursor: pointer; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; height: 40px; padding: 0 24px;">Login with Facebook</button>
+Once the flow is complete, your callback function will send the code and IDs to your backend to continue integration. Follow the API sequences below to set up the WhatsApp Business Cloud API. Once the setup is complete, redirect your users to the final page to continue further based on your product experience.
+The easiest way to test Embedded Signup is by remixing the following Glitch project and pasting the code below into it (don't forget to add Glitch project's URL in the domains allowlist).
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Embedded Signup</title>
+</head>
+<body>
+  <div id="fb-root"></div>
+  <button onclick="launchWhatsAppSignup()" style="background-color: #1877f2; border: 0; border-radius: 4px; color: #fff; cursor: pointer; font-family: Helvetica, Arial, sans-serif; font-size: 16px; font-weight: bold; height: 40px; padding: 0 24px;">Login with Facebook</button>
+  <p>Session info response:</p>
+  <pre id="session-info-response"></pre>
+  </br>
+  <p>SDK response:</p>
+  <pre id="sdk-response"></pre>
+
+  <script>
+    window.addEventListener('message', (event) => {
+      if (event.origin !== "https://www.facebook.com" && event.origin !== "https://web.facebook.com") {
+        return;
+      }
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'WA_EMBEDDED_SIGNUP') {
+          // if user finishes the Embedded Signup flow
+          if (data.event === 'FINISH') {
+            const {phone_number_id, waba_id} = data.data;
+            console.log("Phone number ID ", phone_number_id, " WhatsApp business account ID ", waba_id);
+            // if user cancels the Embedded Signup flow
+          } else if (data.event === 'CANCEL') {
+            const {current_step} = data.data;
+            console.warn("Cancel at ", current_step);
+            // if user reports an error during the Embedded Signup flow
+          } else if (data.event === 'ERROR') {
+            const {error_message} = data.data;
+            console.error("error ", error_message);
+          }
+        }
+        document.getElementById("session-info-response").textContent = JSON.stringify(data, null, 2);
+      } catch {
+        console.log('Non JSON Responses', event.data);
+      }
+    });
+  </script>
+
+  <script>
+    const fbLoginCallback = (response) => {
+      if (response.authResponse) {
+        const code = response.authResponse.code;
+        // The returned code must be transmitted to your backend first and then
+        // perform a server-to-server call from there to our servers for an access token.
+      }
+      document.getElementById("sdk-response").textContent = JSON.stringify(response, null, 2);
+    }
+
+    const launchWhatsAppSignup = () => {
+      // Launch Facebook login
+      FB.login(fbLoginCallback, {
+        config_id: '835533898820237', // configuration ID goes here
+        response_type: 'code', // must be set to 'code' for System User access token
+        override_default_response_type: true, // when true, any response types passed in the "response_type" will take precedence over the default types
+        extras: {"version":"v3"}
+      });
+    }
+  </script>
+
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId            : '756959090659170',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v24.0'
+      });
+    };
+  </script>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/en_US/sdk.js">
+  </script>
+</body>
+</html>

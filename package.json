@@ -1,0 +1,56 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "add-whatsapp": "node scripts/add-whatsapp-campaign-action.js",
+    "add-whatsapp-to-packages": "node scripts/add-whatsapp-to-packages.js",
+    "migrate-whatsapp": "node scripts/migrate-whatsapp-activities.js"
+  },
+  "author": "satendra",
+  "license": "ISC",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.5",
+    "aws-sdk": "^2.1692.0",
+    "axios": "^1.13.6",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.5.1",
+        "express-rate-limit": "^7.5.0",
+    "express-sslify": "^1.2.0",
+    "express-validator": "^7.0.1",
+        "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.47",
+    "mongoose": "^8.0.0",
+    "multer": "^2.1.1",
+    "node-cron": "^3.0.3",
+    "node-module": "^2.0.0",
+    "nodemailer": "^6.9.9",
+    "nodemon": "^3.1.10",
+            "pdfkit": "^0.17.1",
+    "plivo": "^4.70.0",
+    "puppeteer": "^24.10.0",
+    "querystring": "^0.2.1",
+    "razorpay": "^2.9.2",
+    "request-ip": "^3.3.0",
+    "terser": "^5.40.0",
+    "twilio": "^4.22.0",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.4",
+    "@babel/core": "^7.23.6",
+    "@babel/node": "^7.22.19",
+    "@babel/preset-env": "^7.23.6"
+  }
+}

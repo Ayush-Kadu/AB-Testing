@@ -1,0 +1,482 @@
+{
+  "timestamp": "2025-12-27T17:40:22.697Z",
+  "token": {
+    "configured": true,
+    "length": 231,
+    "preview": "EAAKwc0W1T2IBQa..."
+  },
+  "tests": {
+    "tokenValidation": {
+      "endpoint": "/me",
+      "success": true,
+      "status": 200,
+      "data": {
+        "id": "122105728107166219",
+        "name": "Prince Sachdeva",
+        "permissions": {
+          "data": [
+            {
+              "permission": "business_management",
+              "status": "granted"
+            },
+            {
+              "permission": "whatsapp_business_management",
+              "status": "granted"
+            },
+            {
+              "permission": "whatsapp_business_messaging",
+              "status": "granted"
+            },
+            {
+              "permission": "public_profile",
+              "status": "granted"
+            }
+          ]
+        }
+      },
+      "headers": {
+        "etag": "\"c4eda6b3519afea761c9851e30257a91b3b0713c\"",
+        "content-type": "application/json",
+        "vary": "Origin, Accept-Encoding",
+        "x-fb-aed": "698",
+        "cross-origin-resource-policy": "cross-origin",
+        "x-app-usage": "{\"call_count\":5,\"total_cputime\":0,\"total_time\":1}",
+        "access-control-allow-origin": "*",
+        "facebook-api-version": "v24.0",
+        "strict-transport-security": "max-age=15552000; preload",
+        "pragma": "no-cache",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+        "x-fb-request-id": "A4GadWowUgbgDulnuEkmxG1",
+        "x-fb-trace-id": "FSQd/EfUVXj",
+        "x-fb-rev": "1031492564",
+        "x-fb-debug": "s6VxNO8yScrbTNwrxBU8wcqezWuU+rhAEqBpnxiIP2mzCLDiN6H8hTk6TEu3SZT2W5jOEhjHQqNdl3yHJehM0g==",
+        "date": "Sat, 27 Dec 2025 17:40:22 GMT",
+        "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=4, rtx=0, c=10, mss=1380, tbw=4545, tp=-1, tpl=-1, uplat=324, ullat=0",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "connection": "keep-alive",
+        "content-length": "137"
+      }
+    },
+    "businessAccount": {
+      "endpoint": "/933540033366513",
+      "success": true,
+      "status": 200,
+      "data": {
+        "id": "933540033366513",
+        "name": "Nians"
+      },
+      "headers": {
+        "etag": "\"a7c1b8f104d1c1ff9f88337e060e2a7d1d961217\"",
+        "content-type": "application/json",
+        "vary": "Origin",
+        "x-fb-aed": "698",
+        "cross-origin-resource-policy": "cross-origin",
+        "x-app-usage": "{\"call_count\":5,\"total_cputime\":0,\"total_time\":1}",
+        "access-control-allow-origin": "*",
+        "facebook-api-version": "v24.0",
+        "strict-transport-security": "max-age=15552000; preload",
+        "pragma": "no-cache",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+        "x-fb-request-id": "AqDB_m9F9HxN8opXOV9gFqG",
+        "x-fb-trace-id": "FGOjZUEDpBO",
+        "x-fb-rev": "1031492564",
+        "x-fb-debug": "/vG8SGEwXOUJUT9F/Cy3Flnl4BY4ktaF6e0ZLCESmLZKQ62BaLjCbdM3hfjghaatmOSd8m7y4QELPC6y25cokA==",
+        "date": "Sat, 27 Dec 2025 17:40:23 GMT",
+        "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=4, rtx=0, c=10, mss=1380, tbw=5645, tp=-1, tpl=-1, uplat=270, ullat=0",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "connection": "keep-alive",
+        "content-length": "39"
+      }
+    },
+    "fetchWABAsStandard": {
+      "endpoint": "/933540033366513/whatsapp_business_accounts",
+      "success": false,
+      "status": 400,
+      "error": {
+        "message": "Request failed with status code 400",
+        "code": 100,
+        "type": "OAuthException",
+        "data": {
+          "error": {
+            "message": "(#100) Tried accessing nonexisting field (whatsapp_business_accounts) on node type (Business)",
+            "type": "OAuthException",
+            "code": 100,
+            "fbtrace_id": "A4ItTaYn39x-kSbsPcYXeCI"
+          }
+        }
+      }
+    },
+    "fetchWABAsClient": {
+      "endpoint": "/933540033366513/client_whatsapp_business_accounts",
+      "success": true,
+      "status": 200,
+      "data": {
+        "data": [
+          {
+            "id": "1563627827984941",
+            "name": "purenatural861",
+            "account_review_status": "PENDING",
+            "status": "ACTIVE"
+          },
+          {
+            "id": "856684160402997",
+            "name": "Visitor Tracker - URLPT",
+            "account_review_status": "APPROVED",
+            "status": "ACTIVE"
+          },
+          {
+            "id": "638683979331861",
+            "name": "Prince Sachdeva",
+            "account_review_status": "APPROVED",
+            "status": "ACTIVE"
+          },
+          {
+            "id": "1355930519871142",
+            "name": "Syncspace",
+            "account_review_status": "APPROVED",
+            "status": "ACTIVE"
+          }
+        ],
+        "paging": {
+          "cursors": {
+            "before": "QVFIU2UxaElwYW1sTmtEUUxSVWRjTEFCTlRwd3hCUzlyYU95R0QtNmJOdU9uRFJlTFVGT2lOMXJHa1VHbXE3Rl81aUYwWGJTZA1ZAwOXFIM1hyZAXE1R1ZAwdWpB",
+            "after": "QVFIU2hKWW5oQlIwWXNELUpDUE5VZAXpmcTFaODZADLURLNjhWU2F2ekwwSkJGMDgwQmh3bVJRWEVQV2dtQ08yRWdNOFVjYlQ3aUlFYkdfUFJOaE5MMDJnZAmFB"
+          }
+        }
+      },
+      "headers": {
+        "etag": "\"c03817a83dbea2a9c38969d44d52013d1705418c\"",
+        "content-type": "application/json",
+        "vary": "Origin, Accept-Encoding",
+        "x-fb-aed": "698",
+        "x-business-use-case-usage": "{\"638683979331861\":[{\"type\":\"whatsapp_business_management\",\"call_count\":14,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}],\"1563627827984941\":[{\"type\":\"whatsapp_business_management\",\"call_count\":8,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}],\"856684160402997\":[{\"type\":\"whatsapp_business_management\",\"call_count\":3,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}],\"1355930519871142\":[{\"type\":\"whatsapp_business_management\",\"call_count\":2,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}",
+        "access-control-allow-origin": "*",
+        "facebook-api-version": "v24.0",
+        "strict-transport-security": "max-age=15552000; preload",
+        "pragma": "no-cache",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+        "x-fb-request-id": "An5hPl8gYSZqkpmof52e6eO",
+        "x-fb-trace-id": "COKgjW1qbJp",
+        "x-fb-rev": "1031492564",
+        "x-fb-debug": "CF+i6VF3QUEpS+BuCgA9EgScmd65wEI1+1WbkidbRaAWAmjR0o+DGpmQTMeURjTd+ej414qgu7ZPvT3Ex5vk4Q==",
+        "date": "Sat, 27 Dec 2025 17:40:24 GMT",
+        "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=4, rtx=0, c=10, mss=1380, tbw=9318, tp=-1, tpl=-1, uplat=468, ullat=0",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "connection": "keep-alive",
+        "content-length": "439"
+      }
+    },
+    "fetchPhoneNumbers": [
+      {
+        "wabaId": "1563627827984941",
+        "endpoint": "/1563627827984941/phone_numbers",
+        "success": true,
+        "status": 200,
+        "data": {
+          "data": [
+            {
+              "id": "922820240913992",
+              "display_phone_number": "+91 80939 34217",
+              "verified_name": "purenatural861",
+              "quality_rating": "UNKNOWN",
+              "status": "PENDING",
+              "code_verification_status": "VERIFIED"
+            }
+          ],
+          "paging": {
+            "cursors": {
+              "before": "QVFIU3ZAicDYxY09sUmpPWU00ZADRvQVBZAU3I0QWpjR0k3TTM3ZA0ZAWQnYyWnVIM0xpcGlvYlBNWFVOWTFTQUVYQkxQUXFYanlINzVjc0NhZAEh3a0M2aGlSUEhB",
+              "after": "QVFIU3ZAicDYxY09sUmpPWU00ZADRvQVBZAU3I0QWpjR0k3TTM3ZA0ZAWQnYyWnVIM0xpcGlvYlBNWFVOWTFTQUVYQkxQUXFYanlINzVjc0NhZAEh3a0M2aGlSUEhB"
+            }
+          }
+        },
+        "headers": {
+          "etag": "\"bde39041796fb2cd1bad1d65b8c156e1cd4c98f5\"",
+          "content-type": "application/json",
+          "vary": "Origin, Accept-Encoding",
+          "x-fb-aed": "698",
+          "x-business-use-case-usage": "{\"1563627827984941\":[{\"type\":\"whatsapp_business_management\",\"call_count\":8,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0},{\"type\":\"whatsapp_business_management\",\"call_count\":8,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}",
+          "access-control-allow-origin": "*",
+          "facebook-api-version": "v24.0",
+          "strict-transport-security": "max-age=15552000; preload",
+          "pragma": "no-cache",
+          "cache-control": "private, no-cache, no-store, must-revalidate",
+          "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+          "x-fb-request-id": "AWMCuYA6cmzD3L2lcxPE8fK",
+          "x-fb-trace-id": "E9teylsVJA6",
+          "x-fb-rev": "1031492564",
+          "x-fb-debug": "cPSgWN8bIB5Z18hmVzqDCQCaDKaVVjxZKntUIu6p0If9MDYgL9RhJGCMuNt514DmKxatIob/obPFs/o4ggXJhg==",
+          "date": "Sat, 27 Dec 2025 17:40:24 GMT",
+          "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=8, rtx=1, c=10, mss=1380, tbw=11243, tp=-1, tpl=-1, uplat=556, ullat=0",
+          "alt-svc": "h3=\":443\"; ma=86400",
+          "connection": "keep-alive",
+          "content-length": "300"
+        }
+      },
+      {
+        "wabaId": "856684160402997",
+        "endpoint": "/856684160402997/phone_numbers",
+        "success": true,
+        "status": 200,
+        "data": {
+          "data": []
+        },
+        "headers": {
+          "etag": "\"1050253aec7b29caff644806927dabfa81406eee\"",
+          "content-type": "application/json",
+          "vary": "Origin",
+          "x-fb-aed": "698",
+          "x-business-use-case-usage": "{\"856684160402997\":[{\"type\":\"whatsapp_business_management\",\"call_count\":4,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}",
+          "access-control-allow-origin": "*",
+          "facebook-api-version": "v24.0",
+          "strict-transport-security": "max-age=15552000; preload",
+          "pragma": "no-cache",
+          "cache-control": "private, no-cache, no-store, must-revalidate",
+          "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+          "x-fb-request-id": "Aw5XIOnM8QldjQCAYtXe59T",
+          "x-fb-trace-id": "HabxeB2O1uj",
+          "x-fb-rev": "1031492564",
+          "x-fb-debug": "7hGCzPYDmlt2fubtepplTB30+rG+LWufCOrnT8xEcAaZSNZ2MXWQ0PncAYUMR20b5iSdOSSwUIsHaqov8ysZiA==",
+          "date": "Sat, 27 Dec 2025 17:40:27 GMT",
+          "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=23, rtx=2, c=10, mss=1380, tbw=14864, tp=-1, tpl=-1, uplat=319, ullat=0",
+          "alt-svc": "h3=\":443\"; ma=86400",
+          "connection": "keep-alive",
+          "content-length": "11"
+        }
+      },
+      {
+        "wabaId": "638683979331861",
+        "endpoint": "/638683979331861/phone_numbers",
+        "success": true,
+        "status": 200,
+        "data": {
+          "data": [
+            {
+              "id": "952773374577510",
+              "display_phone_number": "+91 80939 34217",
+              "verified_name": "Prince Sachdeva",
+              "quality_rating": "UNKNOWN",
+              "status": "PENDING",
+              "code_verification_status": "VERIFIED"
+            },
+            {
+              "id": "893959830470637",
+              "display_phone_number": "15557686869",
+              "verified_name": "Prince Sachdeva",
+              "quality_rating": "UNKNOWN",
+              "status": "PENDING",
+              "code_verification_status": "VERIFIED"
+            }
+          ],
+          "paging": {
+            "cursors": {
+              "before": "QVFIU1pHVTJRTVZAtNXVfdy0xRHk0RE1YYTdrYnBOVlhudGJMOVdNbGQxZAF9FYnVtYXlrRjJnUUNBN0p6bHM1QVJIU0EyX2R6X2xOazNidjc0U0lVWk9jSHNB",
+              "after": "QVFIU1NVbUdYXzZAObkpNc1AxMF9DWlRPRmUxUG5pcF9ael9zSEMwTFNQRHZAhVGJ3clV2MkFtS3AtdXMwNlFkYWJvdk1PT0ZACYlg4UmVoRno5anRaZA0VUQWFn"
+            }
+          }
+        },
+        "headers": {
+          "etag": "\"00f00530e8383ff03a665efc4e867a3bb08d0abc\"",
+          "content-type": "application/json",
+          "vary": "Origin, Accept-Encoding",
+          "x-fb-aed": "698",
+          "x-business-use-case-usage": "{\"638683979331861\":[{\"type\":\"whatsapp_business_management\",\"call_count\":15,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0},{\"type\":\"whatsapp_business_management\",\"call_count\":15,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}",
+          "access-control-allow-origin": "*",
+          "facebook-api-version": "v24.0",
+          "strict-transport-security": "max-age=15552000; preload",
+          "pragma": "no-cache",
+          "cache-control": "private, no-cache, no-store, must-revalidate",
+          "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+          "x-fb-request-id": "A80eyq-BcXIwz1W53obFjUw",
+          "x-fb-trace-id": "Dw1SpfwCcjF",
+          "x-fb-rev": "1031492564",
+          "x-fb-debug": "+Z10GUMcX1bTvs1WHhHH7vzUIHUEom0B/igxdoZ/VDCOtQVXtYoGL/LcOCAHax/9gjCV2xQhdDQDrqH/2FzqyQ==",
+          "date": "Sat, 27 Dec 2025 17:40:28 GMT",
+          "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=21, rtx=2, c=10, mss=1380, tbw=15860, tp=-1, tpl=-1, uplat=439, ullat=0",
+          "alt-svc": "h3=\":443\"; ma=86400",
+          "connection": "keep-alive",
+          "content-length": "420"
+        }
+      }
+    ],
+    "fetchPhoneDetails": [
+      {
+        "phoneNumberId": "922820240913992",
+        "endpoint": "/922820240913992",
+        "success": true,
+        "status": 200,
+        "data": {
+          "id": "922820240913992",
+          "display_phone_number": "+91 80939 34217",
+          "verified_name": "purenatural861",
+          "quality_rating": "UNKNOWN",
+          "status": "PENDING",
+          "code_verification_status": "VERIFIED"
+        },
+        "headers": {
+          "etag": "\"ae27b390538e4a0b848cc188227985cdbb088e4f\"",
+          "content-type": "application/json",
+          "vary": "Origin",
+          "x-fb-aed": "698",
+          "x-business-use-case-usage": "{\"1563627827984941\":[{\"type\":\"whatsapp_business_management\",\"call_count\":8,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}",
+          "access-control-allow-origin": "*",
+          "facebook-api-version": "v24.0",
+          "strict-transport-security": "max-age=15552000; preload",
+          "pragma": "no-cache",
+          "cache-control": "private, no-cache, no-store, must-revalidate",
+          "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+          "x-fb-request-id": "ANM281U19v5pXTtymHYTLAq",
+          "x-fb-trace-id": "EUwLa2MobZu",
+          "x-fb-rev": "1031492564",
+          "x-fb-debug": "g4z+o3SPme03M6q6KMZo6YtEm0HhjzsRVmBIFAQ9N5v7BYsjH1q2P/740+4kBY4xjHMQT932xuW1j7vSkS73vg==",
+          "date": "Sat, 27 Dec 2025 17:40:25 GMT",
+          "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=13, rtx=2, c=10, mss=1380, tbw=12698, tp=-1, tpl=-1, uplat=470, ullat=0",
+          "alt-svc": "h3=\":443\"; ma=86400",
+          "connection": "keep-alive",
+          "content-length": "182"
+        }
+      },
+      {
+        "phoneNumberId": "952773374577510",
+        "endpoint": "/952773374577510",
+        "success": true,
+        "status": 200,
+        "data": {
+          "id": "952773374577510",
+          "display_phone_number": "+91 80939 34217",
+          "verified_name": "Prince Sachdeva",
+          "quality_rating": "UNKNOWN",
+          "status": "PENDING",
+          "code_verification_status": "VERIFIED"
+        },
+        "headers": {
+          "etag": "\"f730dbe103c42f2d53a382682aeac8a634bf096d\"",
+          "content-type": "application/json",
+          "vary": "Origin",
+          "x-fb-aed": "698",
+          "x-business-use-case-usage": "{\"638683979331861\":[{\"type\":\"whatsapp_business_management\",\"call_count\":15,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}",
+          "access-control-allow-origin": "*",
+          "facebook-api-version": "v24.0",
+          "strict-transport-security": "max-age=15552000; preload",
+          "pragma": "no-cache",
+          "cache-control": "private, no-cache, no-store, must-revalidate",
+          "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+          "x-fb-request-id": "A7FRTOd3c5mjEOBzMuXoXwm",
+          "x-fb-trace-id": "BC5qGRaoSfQ",
+          "x-fb-rev": "1031493827",
+          "x-fb-debug": "1UjOoAJG75tE/oJhCAENxfekuwvMcdbYzcsP9Muk33DG26dEE5vVrSsl5vTbdj8eTlo2unGFenifmorgjJD/Hg==",
+          "date": "Sat, 27 Dec 2025 17:40:29 GMT",
+          "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=19, rtx=2, c=10, mss=1380, tbw=17459, tp=-1, tpl=-1, uplat=403, ullat=0",
+          "alt-svc": "h3=\":443\"; ma=86400",
+          "connection": "keep-alive",
+          "content-length": "183"
+        }
+      },
+      {
+        "phoneNumberId": "893959830470637",
+        "endpoint": "/893959830470637",
+        "success": true,
+        "status": 200,
+        "data": {
+          "id": "893959830470637",
+          "display_phone_number": "15557686869",
+          "verified_name": "Prince Sachdeva",
+          "quality_rating": "UNKNOWN",
+          "status": "PENDING",
+          "code_verification_status": "VERIFIED"
+        },
+        "headers": {
+          "etag": "\"bce44f3c2c3bb43201669c00c901c15bf13853be\"",
+          "content-type": "application/json",
+          "vary": "Origin",
+          "x-fb-aed": "698",
+          "x-business-use-case-usage": "{\"638683979331861\":[{\"type\":\"whatsapp_business_management\",\"call_count\":15,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}",
+          "access-control-allow-origin": "*",
+          "facebook-api-version": "v24.0",
+          "strict-transport-security": "max-age=15552000; preload",
+          "pragma": "no-cache",
+          "cache-control": "private, no-cache, no-store, must-revalidate",
+          "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+          "x-fb-request-id": "Af3bm7OdM35T-gh3_9qHD1x",
+          "x-fb-trace-id": "BQsWtTk6b4C",
+          "x-fb-rev": "1031492564",
+          "x-fb-debug": "j5QbEsOWkFJmbao1Pw3yPmXPsFoGCFF9SiZJlURzurKdns3cgDAfVJ1UPx0GqfIhJgtruMC9XYiSlOITytk8JA==",
+          "date": "Sat, 27 Dec 2025 17:40:30 GMT",
+          "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=17, rtx=2, c=10, mss=1380, tbw=18629, tp=-1, tpl=-1, uplat=400, ullat=0",
+          "alt-svc": "h3=\":443\"; ma=86400",
+          "connection": "keep-alive",
+          "content-length": "179"
+        }
+      }
+    ],
+    "fetchMessageTemplates": [
+      {
+        "wabaId": "1563627827984941",
+        "phoneNumberId": "922820240913992",
+        "endpoint": "/1563627827984941/message_templates",
+        "success": true,
+        "status": 200,
+        "data": {
+          "data": []
+        },
+        "headers": {
+          "etag": "\"1050253aec7b29caff644806927dabfa81406eee\"",
+          "content-type": "application/json",
+          "vary": "Origin",
+          "x-fb-aed": "698",
+          "x-business-use-case-usage": "{\"1563627827984941\":[{\"type\":\"whatsapp_business_management\",\"call_count\":9,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}",
+          "access-control-allow-origin": "*",
+          "facebook-api-version": "v24.0",
+          "strict-transport-security": "max-age=15552000; preload",
+          "pragma": "no-cache",
+          "cache-control": "private, no-cache, no-store, must-revalidate",
+          "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+          "x-fb-request-id": "ASxrW1jKyQGnmYOSzbjemiR",
+          "x-fb-trace-id": "F93U04LBScZ",
+          "x-fb-rev": "1031492564",
+          "x-fb-debug": "CsJ57XGTJ2LlegdKsOH9lWWoHSK4iqeJQ+mi2C/2TzcOB8jk+4Gk7F3NnCXHDPTc0+qjqdXqBVOKMzOg2VLbOg==",
+          "date": "Sat, 27 Dec 2025 17:40:26 GMT",
+          "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=16, rtx=2, c=10, mss=1380, tbw=13867, tp=-1, tpl=-1, uplat=342, ullat=0",
+          "alt-svc": "h3=\":443\"; ma=86400",
+          "connection": "keep-alive",
+          "content-length": "11"
+        }
+      },
+      {
+        "wabaId": "638683979331861",
+        "phoneNumberId": "952773374577510",
+        "endpoint": "/638683979331861/message_templates",
+        "success": true,
+        "status": 200,
+        "data": {
+          "data": []
+        },
+        "headers": {
+          "etag": "\"1050253aec7b29caff644806927dabfa81406eee\"",
+          "content-type": "application/json",
+          "vary": "Origin",
+          "x-fb-aed": "698",
+          "x-business-use-case-usage": "{\"638683979331861\":[{\"type\":\"whatsapp_business_management\",\"call_count\":16,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}",
+          "access-control-allow-origin": "*",
+          "facebook-api-version": "v24.0",
+          "strict-transport-security": "max-age=15552000; preload",
+          "pragma": "no-cache",
+          "cache-control": "private, no-cache, no-store, must-revalidate",
+          "expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+          "x-fb-request-id": "Ai6OxRxznzFSLD99aXkIaKV",
+          "x-fb-trace-id": "HJEtAqhKfOs",
+          "x-fb-rev": "1031492564",
+          "x-fb-debug": "kxYV0bihqZB/89a0cUUYORyC8/6UES9lOLavaO0t7e5SD2EvJm8Ou+DljfV9Fqdx3zC88398rDo9CwzQlNnFpg==",
+          "date": "Sat, 27 Dec 2025 17:40:31 GMT",
+          "x-fb-connection-quality": "EXCELLENT; q=0.9, rtt=27, rtx=2, c=10, mss=1380, tbw=19795, tp=-1, tpl=-1, uplat=343, ullat=0",
+          "alt-svc": "h3=\":443\"; ma=86400",
+          "connection": "keep-alive",
+          "content-length": "11"
+        }
+      }
+    ]
+  }
+}
