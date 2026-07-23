@@ -43,8 +43,8 @@ const loginLimiter = rateLimit({
 
 const port = process.env.PORT || 5006;
 
-const accountSid = 'AC1bea0dd31711d2dced6f012158c3b791';
-const authToken = '80615e7b02532f3a58ecc10d11fb8a6d';
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 
 const client = require('twilio')(accountSid, authToken);
 
