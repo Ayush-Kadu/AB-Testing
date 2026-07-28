@@ -3,8 +3,10 @@ const campaignRoute = require('./src/routes/user.campaign.route');
 const visitorsRoute = require('./src/routes/user.visitor.route');
 const scriptRoute = require('./src/routes/script.route')
 const userRoute = require('./src/routes/user.route');
+const campaignScheduleRoute = require('./src/routes/campaignSchedule.routes');
 const scheduleUserCleanup = require('./src/crons/userCleanup.cron');
 const scheduleSubscriptionDeactivation = require('./src/crons/subscriptionDeactivation.cron');
+const { startScheduler } = require('./src/scheduler/campaignScheduler');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./src/configs/db');
@@ -167,6 +169,7 @@ app.use('/api/v2', userRoute);
 app.use('/api/v2/campaign', campaignRoute);
 app.use('/api/v2/visitors', visitorsRoute);
 app.use('/api/v2/script', scriptRoute);
+app.use('/api/v2/campaign-schedule', campaignScheduleRoute);
 
 app.listen(port, async () => {
   try {
@@ -174,6 +177,7 @@ app.listen(port, async () => {
       .then(() => {
         scheduleUserCleanup();
         scheduleSubscriptionDeactivation();
+        startScheduler(); // Campaign scheduling — see src/scheduler/campaignScheduler.js
      //   subscriptionJob();
       })
       .catch((err) => {

@@ -974,6 +974,7 @@ exports.getCampaignAdmin = async (req, res, next) => {
                     isActive: 1,
                     clicks: 1,
                     status: 1,
+                    schedule: 1,
                     client: {
                         $cond: {
                             if: { $gt: [{ $size: "$client" }, 0] },
