@@ -149,6 +149,40 @@ async function createLog(logData) {
   return SchedulerLog.create(logData);
 }
 
+// Window-mode campaigns currently live whose end time has passed. Mirrors
+// findDueCampaigns above: same batch cap and oldest-expired-first order, so
+// one tick can't try to stop an unbounded number of campaigns at once.
+async function findCampaignsToStop(now, batchSize = 50) {
+    return Campaign.find({
+        isActive: true,
+        "schedule.endAt": {$ne: null, $lte: now },
+        "schedule.status": "published"
+    })
+        .select(SCHEDULE_FIELDS)
+        .sort({ "schedule.endAt": 1 })
+        .limit(batchSize);
+}
+
+// Atomic stop: only succeeds if the campaign is still live and "published"
+// at the moment of the update — same pattern as claimForPublishing above,
+// so a campaign being cancelled/rescheduled by the user at the exact
+// instant its window closes can't race with the scheduler stopping it out
+// from under that action (or be double-completed by two ticks/instances).
+async function markCompleted(campaignId) {
+    return Campaign.findOneAndUpdate(
+        { _id: campaignId, isActive: true, "schedule.status": "published" },
+        {
+            $set: {
+                isActive: false,
+                status: "completed",
+                "schedule.status": "completed",
+                "schedule.completedAt": new Date()
+            }
+        },
+        { new: true }
+    ).select(SCHEDULE_FIELDS);
+}
+
 module.exports = {
   findCampaignForOwner,
   findCampaignById,
@@ -160,5 +194,7 @@ module.exports = {
   claimForPublishing,
   markPublished,
   markAttemptResult,
-  createLog
+  createLog,
+  findCampaignsToStop,
+  markCompleted
 };

@@ -221,6 +221,67 @@ async function publishDueCampaign(campaign) {
   }
 }
 
+// Automatically stops (deactivates) campaigns whose scheduled end time has passed.
+async function stopExpiredCampaign(campaign) {
+
+  const startedAt = Date.now();
+
+  try {
+
+    // Skip if already inactive
+    if (!campaign.isActive) {
+      return {
+        campaignId: campaign._id,
+        outcome: "already_inactive"
+      };
+    }
+
+    // Mark campaign as completed. This only succeeds if the campaign is
+    // still isActive + "published" at the moment of the update — if
+    // another tick already completed it, or the user cancelled/deactivated
+    // it in the same instant, this comes back null and there's nothing
+    // more to do (not an error, just a race we lost harmlessly).
+    const completed = await repo.markCompleted(campaign._id);
+    if (!completed) {
+      return {
+        campaignId: campaign._id,
+        outcome: "already_completed"
+      };
+    }
+
+    // Audit log
+    await repo.createLog({
+      campaignId: campaign._id,
+      clientId: campaign.clientId,
+      action: "campaign_completed",
+      status: "success",
+      durationMs: Date.now() - startedAt
+    });
+
+    return {
+      campaignId: campaign._id,
+      outcome: "completed"
+    };
+
+  } catch (err) {
+
+    await repo.createLog({
+      campaignId: campaign._id,
+      clientId: campaign.clientId,
+      action: "campaign_completion_failed",
+      status: "failure",
+      error: err.message,
+      durationMs: Date.now() - startedAt
+    });
+
+    return {
+      campaignId: campaign._id,
+      outcome: "failed",
+      error: err.message
+    };
+
+  }
+}
 module.exports = {
   ScheduleError,
   scheduleCampaign,
@@ -228,5 +289,6 @@ module.exports = {
   cancelSchedule,
   getSchedule,
   listScheduled,
-  publishDueCampaign
+  publishDueCampaign,
+  stopExpiredCampaign
 };

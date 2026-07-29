@@ -108,6 +108,10 @@ schedule: {
         enum: ["exact", "window"],
         default: null
     },
+    completedAt: {
+        type: Date,
+        default: null
+    },
     // IANA timezone name the user scheduled in, e.g. "Asia/Kolkata". Used
     // only to convert the user's wall-clock input to UTC at schedule-set
     // time; everything stored below (startAt/endAt/effectivePublishAt) is
@@ -135,7 +139,7 @@ schedule: {
     },
     status: {
         type: String,
-        enum: ["unscheduled", "scheduled", "publishing", "published", "failed", "cancelled"],
+        enum: ["unscheduled", "scheduled", "publishing", "published", "failed", "cancelled", "completed"],
         default: "unscheduled"
     },
     attempts: {

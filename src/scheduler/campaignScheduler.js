@@ -30,29 +30,27 @@ async function runDueCampaigns({ isStartupCatchup = false } = {}) {
   const now = new Date();
   const due = await repo.findDueCampaigns(now, BATCH_SIZE);
 
-  if (!due.length) {
-    return { processed: 0, total: 0 };
-  }
+  if (due.length) {
+    console.log(
+      `[scheduler] ${isStartupCatchup ? "Startup catch-up" : "Tick"}: ${due.length} campaign(s) due for publishing.`
+    );
 
-  console.log(
-    `[scheduler] ${isStartupCatchup ? "Startup catch-up" : "Tick"}: ${due.length} campaign(s) due for publishing.`
-  );
-
-  if (isStartupCatchup) {
-    // Fire-and-forget audit marker — doesn't block publishing, just gives
-    // scheduler logs a clear "this went out late because of a restart"
-    // signal, separate from a normal on-time publish.
-    Promise.all(
-      due.map((c) =>
-        repo.createLog({
-          campaignId: c._id,
-          clientId: c.clientId,
-          action: "startup_catchup",
-          status: "info",
-          message: "Picked up by startup catch-up sweep after a server restart."
-        })
-      )
-    ).catch((err) => console.error("[scheduler] Failed to write startup catch-up log:", err.message));
+    if (isStartupCatchup) {
+      // Fire-and-forget audit marker — doesn't block publishing, just gives
+      // scheduler logs a clear "this went out late because of a restart"
+      // signal, separate from a normal on-time publish.
+      Promise.all(
+        due.map((c) =>
+          repo.createLog({
+            campaignId: c._id,
+            clientId: c.clientId,
+            action: "startup_catchup",
+            status: "info",
+            message: "Picked up by startup catch-up sweep after a server restart."
+          })
+        )
+      ).catch((err) => console.error("[scheduler] Failed to write startup catch-up log:", err.message));
+    }
   }
 
   const results = await Promise.allSettled(due.map((campaign) => scheduleService.publishDueCampaign(campaign)));
@@ -63,7 +61,30 @@ async function runDueCampaigns({ isStartupCatchup = false } = {}) {
     errored.forEach((r) => console.error("[scheduler] Unexpected error processing a due campaign:", r.reason));
   }
 
-  return { processed, total: due.length };
+  // Queried *after* the publish step above (not in parallel with it) so a
+  // window-mode campaign whose endAt has already passed by the time its
+  // startAt fires gets stopped in this same tick, rather than sitting live
+  // for up to another minute waiting for the next one.
+  const expired = await repo.findCampaignsToStop(now, BATCH_SIZE);
+  let stopped = 0;
+  let stopTotal = 0;
+
+  if (expired.length) {
+    console.log(
+      `[scheduler] ${isStartupCatchup ? "Startup catch-up" : "Tick"}: ${expired.length} campaign(s) past their window end, stopping.`
+    );
+
+    const stopResults = await Promise.allSettled(expired.map((campaign) => scheduleService.stopExpiredCampaign(campaign)));
+    stopped = stopResults.filter((r) => r.status === "fulfilled").length;
+    stopTotal = expired.length;
+
+    const stopErrored = stopResults.filter((r) => r.status === "rejected");
+    if (stopErrored.length) {
+      stopErrored.forEach((r) => console.error("[scheduler] Unexpected error stopping an expired campaign:", r.reason));
+    }
+  }
+
+  return { processed, total: due.length, stopped, stopTotal };
 }
 
 let cronTask = null;
@@ -77,7 +98,7 @@ function startScheduler({ cronExpression = DEFAULT_CRON_EXPRESSION } = {}) {
   // Immediate catch-up sweep before the first tick.
   runDueCampaigns({ isStartupCatchup: true }).catch((err) =>
     console.error("[scheduler] Startup catch-up sweep failed:", err.message)
-  );
+  );  
 
   cronTask = cron.schedule(cronExpression, () => {
     runDueCampaigns().catch((err) => console.error("[scheduler] Tick failed:", err.message));
