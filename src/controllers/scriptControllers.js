@@ -14,7 +14,7 @@ const campaignLogger = require('../utils/campaignLogger');
 const userMailCredentials = require('../models/userMailCredentials.model');
 const nodemailer = require("nodemailer");
 const Experiment = require('../models/experiment.model');
-const Variant = require('../models/variant.temp_model');
+const Variant = require('../models/variant.model');
 const { buildAbLoaderScript } = require('../utils/abLoaderScript');
 const sendSendGridMailforuser = require('../utils/sendGridMailerforUser'); // your mailer
 

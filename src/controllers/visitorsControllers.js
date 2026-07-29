@@ -8,7 +8,7 @@ const EmailSubmission = require('./../models/emailSubmission.model');
 const Contact = require('./../models/contact.model');
 const Conversion = require('./../models/conversion.model');
 const mongoose = require('mongoose');
-const Variant = require('../models/variant.temp_model');
+const Variant = require('../models/variant.model');
 const VariantEvent = require('./../models/variantEvent.model');
 
 // A/B Testing — if this campaignId happens to belong to a variant's cloned
