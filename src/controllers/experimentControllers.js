@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Variant = require("../models/variant.model");
+const Variant = require("../models/variant.temp_model");
 const Campaign = require("../models/user.campaign.model");
 const Experiment = require("../models/experiment.model");
 const VariantEvent = require("../models/variantEvent.model");
