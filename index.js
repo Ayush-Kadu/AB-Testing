@@ -59,21 +59,18 @@ app.use(express.json());
 app.use(cookieParser());
 // Configure CORS for cross-origin requests from client websites
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-
-    // For production: Allow all origins since users can register any domain
-    // This is necessary for a tracking script that works on any website
-    callback(null, true);
-
-    // Log the origin for monitoring (optional)
-    console.log('CORS request from origin:', origin);
-  },
+  // Allow every origin, with or without one present (curl/mobile apps send
+  // no Origin header at all) — reflects the actual request origin back
+  // rather than a literal "*", which is what's required when credentials
+  // are involved. This API serves a tracking script embedded on arbitrary
+  // customer websites, so there's no fixed allowlist to check against.
+  origin: true,
   credentials: true, // Allow cookies and authentication headers
-  // methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // ✅ add PATCH here
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
+  // No allowedHeaders list: leaving it unset makes the `cors` package
+  // reflect back whatever the browser's preflight actually asked for
+  // (Access-Control-Request-Headers) instead of rejecting anything not on
+  // a fixed list — i.e. every header is allowed.
   exposedHeaders: ['Content-Length', 'X-Requested-With']
 }));
 app.set('trust proxy', 1);
@@ -157,8 +154,10 @@ app.options('*', (req, res) => {
     timestamp: new Date().toISOString()
   });
   res.header('Access-Control-Allow-Origin', origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD');
+  // Reflect back whatever headers this specific preflight asked for,
+  // instead of a fixed list — so any header is allowed here too.
+  res.header('Access-Control-Allow-Headers', req.headers['access-control-request-headers'] || '*');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Max-Age', '86400');
   res.sendStatus(200);
