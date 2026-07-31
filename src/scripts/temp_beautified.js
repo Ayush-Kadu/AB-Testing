@@ -11,7 +11,7 @@ if(0===c.indexOf(nameEQ))return decodeURIComponent(c.substring(nameEQ.length))}
 return null}
 async function checkDisplayCountLimit(){
 try{
-const response=await fetch("https://urlpt-api.onrender.com/api/campaign/check-display-limit/6a3cf24087b2a1f1c3386c80",{
+const response=await fetch("https://urlpt-api.onrender.comender.com/api/campaign/check-display-limit/6a3cf24087b2a1f1c3386c80",{
 method:"POST",headers:{
 "Content-Type":"application/json"}
 ,body:JSON.stringify({
@@ -38,7 +38,7 @@ return null}
 var visitorId=getCookie("visitorId"),visitId=getCookie("visitId"),popUpShown=!1,completelyClosed=!1,sessionShown=!1;
 async function postData(endpoint,body){
 try{
-const response=await fetch("https://urlpt-api.onrender.com/api/campaign/"+endpoint,{
+const response=await fetch("https://urlpt-api.onrender.comender.com/api/campaign/"+endpoint,{
 method:"POST",headers:{
 "Content-Type":"application/json"}
 ,body:JSON.stringify(body)}

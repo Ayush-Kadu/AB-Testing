@@ -146,7 +146,7 @@ exports.getScripts = async (req, res, next) => {
         }
 
         // Loader for main + campaign scripts
-        const baseUrl = 'http://localhost:5008/scripts';
+        const baseUrl = 'https://urlpt-api.onrender.com/scripts';
         const loader = `
       (function loadScripts() {
       const matchedCampaigns = ${JSON.stringify(matchedCampaigns.map(c => c._id))};

@@ -1535,7 +1535,7 @@ exports.scriptUpdate = async (req, res, next) => {
                             __visitorId = window.visitorId || getCookie('visitorId');
                             __vidAttempts++;
                         }
-                        const response = await fetch('${process.env.BACKEND_URL}/api/campaign/check-display-limit/${campaignId}', {
+                        const response = await fetch('https://urlpt-api.onrender.com_URL}/api/campaign/check-display-limit/${campaignId}', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -1651,7 +1651,7 @@ exports.scriptUpdate = async (req, res, next) => {
                             __visitorId = window.visitorId || getCookie('visitorId');
                             __vidAttempts++;
                         }
-                        const response = await fetch('${process.env.BACKEND_URL}/api/campaign/check-display-limit/${campaignId}', {
+                        const response = await fetch('https://urlpt-api.onrender.com_URL}/api/campaign/check-display-limit/${campaignId}', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -2422,7 +2422,7 @@ exports.regenerateAllActiveCampaigns = async (req, res, next) => {
                                     __visitorId = window.visitorId || getCookie('visitorId');
                                     __vidAttempts++;
                                 }
-                                const response = await fetch('${process.env.BACKEND_URL}/api/campaign/check-display-limit/${campaign._id}', {
+                                const response = await fetch('https://urlpt-api.onrender.com_URL}/api/campaign/check-display-limit/${campaign._id}', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -2537,7 +2537,7 @@ exports.regenerateAllActiveCampaigns = async (req, res, next) => {
                                     __visitorId = window.visitorId || getCookie('visitorId');
                                     __vidAttempts++;
                                 }
-                                const response = await fetch('${process.env.BACKEND_URL}/api/campaign/check-display-limit/${campaign._id}', {
+                                const response = await fetch('https://urlpt-api.onrender.com_URL}/api/campaign/check-display-limit/${campaign._id}', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',

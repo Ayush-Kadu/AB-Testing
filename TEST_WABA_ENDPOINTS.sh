@@ -4,7 +4,7 @@
 # Usage: ./TEST_WABA_ENDPOINTS.sh
 
 TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2Q5MDkyY2ExZjgwYTJjOGZhOGEzZTIiLCJpYXQiOjE3NjU5NTQ1OTh9.RvlImJXHGprQ5q032XlGInpntlCEM2kMzB7ENTdEMN8"
-BASE_URL="http://localhost:5008/api/auth/whatsapp/multi-tenant/waba-accounts"
+BASE_URL="${BACKEND_URL:-http://localhost:5008}/api/auth/whatsapp/multi-tenant/waba-accounts"
 
 echo "🧪 Testing WABA Accounts Endpoints"
 echo "=================================="

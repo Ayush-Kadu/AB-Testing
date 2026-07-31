@@ -98,7 +98,7 @@ exports.getScripts = async (req, res, next) => {
             return
         }
 
-        const baseUrl = 'http://localhost:5008/scripts'; // replace with your CDN or API domain
+        const baseUrl = 'https://urlpt-api.onrender.com/scripts'; // replace with your CDN or API domain
 
         const mainScript = `${user?._id}-main.js`;
 

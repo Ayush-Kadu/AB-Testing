@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Support multiple form classes
     const form = document.querySelector('.urlpt_form, .wpcf7-form');
     const submitButton = document.querySelector('.urlpt_form_btn, .gform_button, .wpcf7-submit');
-    const conversionUrl = 'https://urlpt-api.onrender.com/api/conversion/add-conversion';
+    const conversionUrl = 'https://urlpt-api.onrender.comender.com/api/conversion/add-conversion';
 
     const getCookie = (name) => {
         const cookies = document.cookie.split(';').map(c => c.trim());

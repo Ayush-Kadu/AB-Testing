@@ -160,7 +160,7 @@
                     campaignName: 'new sendDD'
                 });
                 
-                fetch('https://urlpt-api.onrender.com/api/script/send-email-campaign', {
+                fetch('https://urlpt-api.onrender.comender.com/api/script/send-email-campaign', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
