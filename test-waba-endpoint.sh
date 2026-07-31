@@ -7,10 +7,9 @@ echo ""
 
 # Replace YOUR_AUTH_TOKEN with actual user auth token
 AUTH_TOKEN="YOUR_AUTH_TOKEN_HERE"
-BASE_URL="${BACKEND_URL:-http://localhost:5008}"
 
 echo "1. Testing OPTIONS (CORS preflight)..."
-curl -X OPTIONS "${BASE_URL}/api/auth/whatsapp/multi-tenant/waba-accounts" \
+curl -X OPTIONS "https://urlpt-api.onrender.com/api/auth/whatsapp/multi-tenant/waba-accounts" \
   -H "Origin: https://urlpt.technians.in" \
   -H "Access-Control-Request-Method: GET" \
   -H "Access-Control-Request-Headers: authorization,content-type" \
@@ -19,7 +18,7 @@ curl -X OPTIONS "${BASE_URL}/api/auth/whatsapp/multi-tenant/waba-accounts" \
 echo ""
 echo ""
 echo "2. Testing GET with auth token..."
-curl -X GET "${BASE_URL}/api/auth/whatsapp/multi-tenant/waba-accounts" \
+curl -X GET "https://urlpt-api.onrender.com/api/auth/whatsapp/multi-tenant/waba-accounts" \
   -H "Authorization: Bearer $AUTH_TOKEN" \
   -H "Origin: https://urlpt.technians.in" \
   -H "Content-Type: application/json" \
