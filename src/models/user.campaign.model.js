@@ -94,6 +94,15 @@ schedule: {
     type: Boolean,
     default: false
     },
+    // True only while the scheduler itself paused this campaign for a
+    // Saturday/Sunday (see enforceWeekendExclusion in campaignSchedule.service.js).
+    // Lets Monday's auto-resume tell "we paused this for the weekend" apart
+    // from "the user deactivated it on purpose" — only the former gets
+    // reactivated automatically.
+    weekendPaused: {
+    type: Boolean,
+    default: false
+    },
     priority: {
     type: String,
     enum: [

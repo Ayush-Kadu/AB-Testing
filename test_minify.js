@@ -12,7 +12,7 @@ async function testMinify() {
     let rawScript = match[1];
     
     // Evaluate the template literal with mock variables
-    rawScript = rawScript.replace(/\$\{baseURL\}/g, "http://localhost:5008");
+    rawScript = rawScript.replace(/\$\{baseURL\}/g, "https://urlpt-api.onrender.com");
     rawScript = rawScript.replace(/\$\{currentTemplate\._id\}/g, "mock_id");
     
     // Evaluate JSON.stringify properly. In JS, JSON.stringify("hello") is '"hello"'.

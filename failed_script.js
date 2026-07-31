@@ -19,7 +19,7 @@
                 // Function to check display count limit
                 async function checkDisplayCountLimit() {
                     try {
-                        const response = await fetch('http://localhost:5008/api/campaign/check-display-limit/6a3d24f9f3011983080c7093', {
+                        const response = await fetch('https://urlpt-api.onrender.com/api/campaign/check-display-limit/6a3d24f9f3011983080c7093', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -76,7 +76,7 @@
                 
                 async function postData(endpoint, body) {
                     try {
-                        const response = await fetch('http://localhost:5008/api/campaign/' + endpoint, {
+                        const response = await fetch('https://urlpt-api.onrender.com/api/campaign/' + endpoint, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'

@@ -84,7 +84,26 @@ async function runDueCampaigns({ isStartupCatchup = false } = {}) {
     }
   }
 
-  return { processed, total: due.length, stopped, stopTotal };
+  // Runs every tick regardless of due/expired counts above — each campaign
+  // can be scheduled in a different timezone, so the Fri-midnight→Saturday
+  // and Sun-midnight→Monday boundary lands at a different real-world moment
+  // per campaign. weekendResults logs its own errors per-campaign (see
+  // enforceWeekendExclusion), so nothing further to report here beyond a
+  // top-level catch for a total failure of the step itself.
+  let weekendPaused = 0;
+  let weekendResumed = 0;
+  try {
+    const weekendResults = await scheduleService.enforceWeekendExclusion(now);
+    weekendPaused = weekendResults.filter((r) => r.outcome === "paused_for_weekend").length;
+    weekendResumed = weekendResults.filter((r) => r.outcome === "resumed_from_weekend").length;
+    if (weekendPaused || weekendResumed) {
+      console.log(`[scheduler] Weekend exclusion: ${weekendPaused} paused, ${weekendResumed} resumed.`);
+    }
+  } catch (err) {
+    console.error("[scheduler] Weekend exclusion check failed:", err.message);
+  }
+
+  return { processed, total: due.length, stopped, stopTotal, weekendPaused, weekendResumed };
 }
 
 let cronTask = null;

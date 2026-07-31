@@ -161,7 +161,7 @@
                     campaignName: 'send'
                 });
                 
-                fetch('http://localhost:5008/api/script/send-email-campaign', {
+                fetch('https://urlpt-api.onrender.com/api/script/send-email-campaign', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

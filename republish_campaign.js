@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs').promises;
+require('dotenv').config();
 const scriptModel = require('./src/models/scriptModel');
 const Campaign = require('./src/models/user.campaign.model');
 const User = require('./src/models/user.model');
@@ -200,7 +201,7 @@ const generateMailScript = (template, user) => {
                     campaignName: '${template.name || template.campaignName || template.campaigndesignerName || "Untitled Campaign"}'
                 });
                 
-                fetch('http://localhost:5008/api/script/send-email-campaign', {
+                fetch('${process.env.BACKEND_URL}/api/script/send-email-campaign', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

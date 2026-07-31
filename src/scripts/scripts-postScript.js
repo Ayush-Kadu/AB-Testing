@@ -477,7 +477,7 @@ async function postUserDataToServer(userData) {
     const userCookieData = updateUserCookieWithInteractions(getInteractions())
     userData = { ...userData, ...userCookieData, clientId: typeof userId !== "undefined" ? userId : null, new: true }
     console.log('userData: ', userData);
-    const firebaseUrl = 'http://localhost:5008/api/visitors/add-visitors';
+    const firebaseUrl = 'https://urlpt-api.onrender.com/api/visitors/add-visitors';
 
     try {
         const response = await fetch(firebaseUrl, {

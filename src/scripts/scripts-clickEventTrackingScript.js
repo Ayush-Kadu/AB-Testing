@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const conversionUrl = 'http://localhost:5008/api/conversion/add-conversion';
+    const conversionUrl = 'https://urlpt-api.onrender.com/api/conversion/add-conversion';
 
     const getCookie = (name) => {
         const cookies = document.cookie.split(';').map(c => c.trim());

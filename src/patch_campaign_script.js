@@ -8,10 +8,11 @@
 
 const path = require('path');
 const fs = require('fs');
+require('dotenv').config();
 
 const CAMPAIGN_ID = '6a3a2e2b33a297dd051160e0';
 const CLIENT_ID = '68b58625949a81fd08330b38';
-const BASE_URL = 'http://localhost:5008';
+const BASE_URL = process.env.BACKEND_URL;
 const SCRIPT_FILE = path.join(__dirname, `../scripts/${CLIENT_ID}-${CAMPAIGN_ID}.js`);
 
 // Read current script

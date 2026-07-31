@@ -348,7 +348,7 @@ exports.getScripts = async (req, res, next) => {
           subscribeUser().then(subscription => {
             const visitorId = document.cookie.replace(/(?:(?:^|.*;\\s*)visitorId\\s*\\=\\s*([^;]*).*$)|^.*$/, "$1");
             const domain = window.location.hostname;
-            return fetch('http://localhost:5008/api/auth/websites/push/save-subscription', {
+            return fetch('${process.env.BACKEND_URL}/api/auth/websites/push/save-subscription', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -473,7 +473,7 @@ exports.getScripts = async (req, res, next) => {
             //         if (res === 'granted') {
             //           subscribeUser()
             //             .then(subscription => {
-            //               return fetch('http://localhost:5008/api/auth/websites/push/save-subscription', {
+            //               return fetch('${process.env.BACKEND_URL}/api/auth/websites/push/save-subscription', {
             //                 method: 'POST',
             //                 headers: { 'Content-Type': 'application/json' },
             //                 body: JSON.stringify({

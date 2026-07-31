@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('gform_106');
     const submitButton = document.getElementById('gform_submit_button_106');
-    const conversionUrl = 'http://localhost:5008/api/conversion/add-conversion';
+    const conversionUrl = 'https://urlpt-api.onrender.com/api/conversion/add-conversion';
 
     const getCookie = (name) => {
         const cookies = document.cookie.split(';').map(c => c.trim());

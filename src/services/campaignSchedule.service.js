@@ -282,6 +282,57 @@ async function stopExpiredCampaign(campaign) {
 
   }
 }
+
+// Sunday=0 .. Saturday=6, evaluated in the campaign's own configured
+// timezone — a campaign scheduled for "Asia/Kolkata" is judged against
+// India's calendar day, not the server's.
+function isWeekendInZone(date, timezone) {
+  const dow = moment.tz(date, timezone || "UTC").day();
+  return dow === 0 || dow === 6;
+}
+
+// Runs every tick, independent of publish/stop. For every still-"published"
+// campaign with Exclude Weekends on: pause it if it's currently live and
+// today is a Saturday/Sunday in its own timezone, or resume it if today is
+// a weekday and *we're* the one who paused it (see pauseForWeekend /
+// resumeFromWeekend in the repository for the race-safety and the
+// weekendPaused marker that keeps this from ever reactivating a campaign
+// the user deactivated on purpose).
+async function enforceWeekendExclusion(now = new Date()) {
+  const candidates = await repo.findCampaignsWithWeekendExclusion();
+  const results = [];
+
+  for (const campaign of candidates) {
+    const weekend = isWeekendInZone(now, campaign.schedule.timezone);
+
+    if (weekend && campaign.isActive) {
+      const paused = await repo.pauseForWeekend(campaign._id);
+      if (!paused) continue; // lost a race — another tick/instance got it first
+      await repo.createLog({
+        campaignId: campaign._id,
+        clientId: campaign.clientId,
+        action: "weekend_paused",
+        status: "info",
+        message: "Paused for the weekend (Exclude Weekends is on)."
+      });
+      results.push({ campaignId: campaign._id, outcome: "paused_for_weekend" });
+    } else if (!weekend && !campaign.isActive && campaign.schedule.weekendPaused) {
+      const resumed = await repo.resumeFromWeekend(campaign._id);
+      if (!resumed) continue;
+      await repo.createLog({
+        campaignId: campaign._id,
+        clientId: campaign.clientId,
+        action: "weekend_resumed",
+        status: "info",
+        message: "Resumed after the weekend."
+      });
+      results.push({ campaignId: campaign._id, outcome: "resumed_from_weekend" });
+    }
+  }
+
+  return results;
+}
+
 module.exports = {
   ScheduleError,
   scheduleCampaign,
@@ -290,5 +341,6 @@ module.exports = {
   getSchedule,
   listScheduled,
   publishDueCampaign,
-  stopExpiredCampaign
+  stopExpiredCampaign,
+  enforceWeekendExclusion
 };

@@ -28,7 +28,8 @@ const schedulerLogSchema = new mongoose.Schema(
       type: String,
       enum: [
         "publish_attempt", "publish_success", "publish_failed", "publish_exhausted", "cancelled", "startup_catchup",
-        "campaign_completed", "campaign_completion_failed"
+        "campaign_completed", "campaign_completion_failed",
+        "weekend_paused", "weekend_resumed"
       ],
       required: true
     },

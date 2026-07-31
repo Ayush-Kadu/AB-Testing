@@ -183,6 +183,41 @@ async function markCompleted(campaignId) {
     ).select(SCHEDULE_FIELDS);
 }
 
+// Candidates for weekend enforcement — anything still "published" with
+// Exclude Weekends on, active or not. Both directions (pause / resume) are
+// decided in the service layer since that's where "is it the weekend in
+// *this* campaign's own timezone" gets evaluated; this just narrows the
+// field down to what's worth checking at all.
+async function findCampaignsWithWeekendExclusion() {
+  return Campaign.find({
+    "schedule.status": "published",
+    "schedule.excludeWeekends": true
+  }).select(SCHEDULE_FIELDS);
+}
+
+// Atomic pause: only succeeds if still live — same race protection as
+// claimForPublishing/markCompleted. Sets weekendPaused so Monday's resume
+// knows *we* did this, not the user.
+async function pauseForWeekend(campaignId) {
+  return Campaign.findOneAndUpdate(
+    { _id: campaignId, isActive: true, "schedule.status": "published" },
+    { $set: { isActive: false, "schedule.weekendPaused": true } },
+    { new: true }
+  ).select(SCHEDULE_FIELDS);
+}
+
+// Atomic resume: only succeeds if it's currently inactive *and* still
+// carries our weekendPaused marker — a campaign the user deactivated on
+// purpose never has that marker set, so this can't accidentally turn it
+// back on.
+async function resumeFromWeekend(campaignId) {
+  return Campaign.findOneAndUpdate(
+    { _id: campaignId, isActive: false, "schedule.status": "published", "schedule.weekendPaused": true },
+    { $set: { isActive: true, "schedule.weekendPaused": false } },
+    { new: true }
+  ).select(SCHEDULE_FIELDS);
+}
+
 module.exports = {
   findCampaignForOwner,
   findCampaignById,
@@ -196,5 +231,8 @@ module.exports = {
   markAttemptResult,
   createLog,
   findCampaignsToStop,
-  markCompleted
+  markCompleted,
+  findCampaignsWithWeekendExclusion,
+  pauseForWeekend,
+  resumeFromWeekend
 };

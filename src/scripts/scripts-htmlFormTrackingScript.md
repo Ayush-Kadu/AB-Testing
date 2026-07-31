@@ -33,7 +33,7 @@ A client-side helper that enriches forms with hidden analytics fields, posts sub
    - Collect all form fields by `name` or `id`.
    - Normalize keys using heuristics (see below).
    - Add `visitorId`, `visitId`, `userId`.
-   - POST JSON to `http://localhost:5008/api/conversion/add-conversion`.
+   - POST JSON to `https://urlpt-api.onrender.com/api/conversion/add-conversion`.
 7. On successful conversion response:
    - If `phone` present: save `phone` cookie and trigger SMS campaigns.
    - If `email` present: save `email` cookie and trigger Email campaigns.
@@ -91,13 +91,13 @@ A client-side helper that enriches forms with hidden analytics fields, posts sub
 ### Post-conversion campaign triggers
 
 - **SMS campaigns**
-  - Fetch active: `GET http://localhost:5008/api/campaign/get-active-sms-campaigns?userId={userId}`
-  - Trigger send: `POST http://localhost:5008/api/script/send-sms`
+  - Fetch active: `GET https://urlpt-api.onrender.com/api/campaign/get-active-sms-campaigns?userId={userId}`
+  - Trigger send: `POST https://urlpt-api.onrender.com/api/script/send-sms`
   - Body includes: `contact` (phone), `templateId` (campaign `_id`), `userId`, `visitorId`, `visitId`
 
 - **Email campaigns**
-  - Fetch active: `GET http://localhost:5008/api/campaign/get-active-email-campaigns?userId={userId}`
-  - Trigger send: `POST http://localhost:5008/api/script/send-email-campaign`
+  - Fetch active: `GET https://urlpt-api.onrender.com/api/campaign/get-active-email-campaigns?userId={userId}`
+  - Trigger send: `POST https://urlpt-api.onrender.com/api/script/send-email-campaign`
   - Body includes: `email`, `templateId`, `userId`, `visitorId`, `visitId`
 
 On successful conversion, the script stores `phone` and/or `email` in cookies for future campaign usage.
