@@ -49,9 +49,9 @@ const setupTriggerBasedCampaignsGlobal = async () => {
     // Fetch all active campaigns
     try {
         const [smsCampaignsRes, emailCampaignsRes, whatsappCampaignsRes] = await Promise.all([
-            phoneFromCookie ? fetch(`https://urlpt-api.onrender.comender.com/api/campaign/get-active-sms-campaigns?userId=${userId}`).catch(() => null) : null,
-            emailFromCookie ? fetch(`https://urlpt-api.onrender.comender.com/api/campaign/get-active-email-campaigns?userId=${userId}`).catch(() => null) : null,
-            phoneFromCookie ? fetch(`https://urlpt-api.onrender.comender.com/api/campaign/get-active-whatsapp-campaigns?userId=${userId}`).catch(() => null) : null
+            phoneFromCookie ? fetch(`https://urlpt-api.onrender.com/api/campaign/get-active-sms-campaigns?userId=${userId}`).catch(() => null) : null,
+            emailFromCookie ? fetch(`https://urlpt-api.onrender.com/api/campaign/get-active-email-campaigns?userId=${userId}`).catch(() => null) : null,
+            phoneFromCookie ? fetch(`https://urlpt-api.onrender.com/api/campaign/get-active-whatsapp-campaigns?userId=${userId}`).catch(() => null) : null
         ]);
 
         // Process campaigns - we'll set up triggers here
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Support multiple form classes
     const form = document.querySelector('.urlpt_form, .wpcf7-form, .gform_106, .isolate ');
     const submitButton = document.querySelector('.urlpt_form_btn, .gform_button, .wpcf7-submit, button[type="submit"], input[type="submit"]');
-    const conversionUrl = 'https://urlpt-api.onrender.comender.com/api/conversion/add-conversion';
+    const conversionUrl = 'https://urlpt-api.onrender.com/api/conversion/add-conversion';
 
     // Note: We continue even if no form is found, to set up trigger-based campaigns
     if (!form) {
@@ -641,7 +641,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log('👤 User ID:', userId);
 
             // Get active SMS campaigns for this user
-            const campaignsResponse = await fetch(`https://urlpt-api.onrender.comender.com/api/campaign/get-active-sms-campaigns?userId=${userId}`, {
+            const campaignsResponse = await fetch(`https://urlpt-api.onrender.com/api/campaign/get-active-sms-campaigns?userId=${userId}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -679,7 +679,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Function to actually send SMS
                     const sendSMS = async () => {
                         try {
-                            const smsResponse = await fetch('https://urlpt-api.onrender.comender.com/api/script/send-sms', {
+                            const smsResponse = await fetch('https://urlpt-api.onrender.com/api/script/send-sms', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
@@ -840,7 +840,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log('👤 User ID:', userId);
 
             // Get active email campaigns for this user
-            const campaignsResponse = await fetch(`https://urlpt-api.onrender.comender.com/api/campaign/get-active-email-campaigns?userId=${userId}`, {
+            const campaignsResponse = await fetch(`https://urlpt-api.onrender.com/api/campaign/get-active-email-campaigns?userId=${userId}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -878,7 +878,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Function to actually send Email
                     const sendEmail = async () => {
                         try {
-                            const emailResponse = await fetch('https://urlpt-api.onrender.comender.com/api/script/send-email-campaign', {
+                            const emailResponse = await fetch('https://urlpt-api.onrender.com/api/script/send-email-campaign', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
@@ -1039,7 +1039,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log('👤 User ID:', userId);
 
             // Get active WhatsApp campaigns for this user
-            const campaignsResponse = await fetch(`https://urlpt-api.onrender.comender.com/api/campaign/get-active-whatsapp-campaigns?userId=${userId}`, {
+            const campaignsResponse = await fetch(`https://urlpt-api.onrender.com/api/campaign/get-active-whatsapp-campaigns?userId=${userId}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -1077,7 +1077,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Function to actually send WhatsApp
                     const sendWhatsApp = async () => {
                         try {
-                            const whatsappResponse = await fetch('https://urlpt-api.onrender.comender.com/api/script/send-whatsapp', {
+                            const whatsappResponse = await fetch('https://urlpt-api.onrender.com/api/script/send-whatsapp', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
@@ -1427,9 +1427,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Fetch all active campaigns
         const [smsCampaignsRes, emailCampaignsRes, whatsappCampaignsRes] = await Promise.all([
-            phoneFromCookie ? fetch(`https://urlpt-api.onrender.comender.com/api/campaign/get-active-sms-campaigns?userId=${userId}`).catch(() => null) : null,
-            emailFromCookie ? fetch(`https://urlpt-api.onrender.comender.com/api/campaign/get-active-email-campaigns?userId=${userId}`).catch(() => null) : null,
-            phoneFromCookie ? fetch(`https://urlpt-api.onrender.comender.com/api/campaign/get-active-whatsapp-campaigns?userId=${userId}`).catch(() => null) : null
+            phoneFromCookie ? fetch(`https://urlpt-api.onrender.com/api/campaign/get-active-sms-campaigns?userId=${userId}`).catch(() => null) : null,
+            emailFromCookie ? fetch(`https://urlpt-api.onrender.com/api/campaign/get-active-email-campaigns?userId=${userId}`).catch(() => null) : null,
+            phoneFromCookie ? fetch(`https://urlpt-api.onrender.com/api/campaign/get-active-whatsapp-campaigns?userId=${userId}`).catch(() => null) : null
         ]);
 
         // Process SMS campaigns
@@ -1551,7 +1551,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 { [type === 'SMS' ? 'contact' : 'phoneNumber']: contact, templateId: campaign._id, userId, visitorId: getCookie('visitorId'), visitId: getCookie('visitId') };
 
             try {
-                const response = await fetch(`https://urlpt-api.onrender.comender.com${endpoint}`, {
+                const response = await fetch(`https://urlpt-api.onrender.com${endpoint}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body)

@@ -279,7 +279,7 @@ function getUserIpAddress() {
 
     console.log('userData:asfasf ', newClientId);
     userData["clientId"] = newClientId
-    const firebaseUrl = 'https://urlpt-api.onrender.comender.com/api/v2/visitors';
+    const firebaseUrl = 'https://urlpt-api.onrender.com/api/v2/visitors';
     console.log('firebaseUrl: ', firebaseUrl);
   
     fetch(firebaseUrl, {
