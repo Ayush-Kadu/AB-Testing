@@ -20,11 +20,14 @@ const createCampaignScript = async (content, clientId, campaignId, isActive) => 
             campaignId = campaignId.toString();
         }
 
-        const fileName = `${clientId}-${campaignId}.js`        
+        const fileName = `${clientId}-${campaignId}.js`
         const scriptsDir = path.join(__dirname, `../scripts`);
         const outputPath = path.join(scriptsDir, fileName);
-        
-        // Ensure scripts directory exists
+
+        // Written to disk too — harmless and still useful for local dev,
+        // but Mongo (below) is the actual source of truth in production:
+        // Render's filesystem is ephemeral and this file would otherwise
+        // vanish the next time the service redeploys.
         await fs.mkdir(scriptsDir, { recursive: true });
         await fs.writeFile(outputPath, content, 'utf8');
 
@@ -32,9 +35,10 @@ const createCampaignScript = async (content, clientId, campaignId, isActive) => 
             name: fileName,
             userId: clientId,
             isActive: isActive,
-            campaignId: campaignId
+            campaignId: campaignId,
+            content: content
         }
-        
+
         await scriptModel.deleteMany({name: fileName})
         const data = await scriptModel.create(scriptPayload)
     } catch (error) {

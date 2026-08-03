@@ -3,6 +3,7 @@ const Variant = require("../models/variant.model");
 const Experiment = require("../models/experiment.model");
 const Campaign = require("../models/user.campaign.model");
 const VariantEvent = require("../models/variantEvent.model");
+const { createCampaignScript } = require("../utils/createScript");
 
 const VALID_VARIANT_NAMES = ["A", "B", "C", "D"];
 const VALID_EVENT_TYPES = ["impression", "click", "conversion"];
@@ -221,6 +222,25 @@ exports.updateVariant = async (req, res) => {
             if (imageURL !== undefined) campaignUpdates.imageURL = imageURL;
             if (Object.keys(campaignUpdates).length > 0) {
                 await Campaign.findByIdAndUpdate(variant.campaignId._id || variant.campaignId, campaignUpdates);
+            }
+
+            // Mirrors campaignControllers.js#updateCampaign: whenever
+            // popupContent changes, the actual served script has to be
+            // regenerated too, or the campaign document says one thing and
+            // the file visitors get served (or don't get served at all,
+            // if none was ever created) says another. This is the only
+            // place in the variant lifecycle that calls createCampaignScript
+            // — createVariant leaves new variants as unscripted drafts on
+            // purpose, and publishVariant only flips isActive/status.
+            if (popupContent !== undefined) {
+                const campaignId = (variant.campaignId._id || variant.campaignId).toString();
+                let content = popupContent.replace(/\{\{CAMPAIGN_ID\}\}/g, campaignId);
+                content = content.replace(/\{\{USER_ID\}\}/g, req.user._id.toString());
+                const showTeaser = req.body.showTeaser !== undefined ? req.body.showTeaser : true;
+                content = content.replace(/\{\{SHOW_TEASER\}\}/g, showTeaser.toString());
+
+                const existingCampaign = await Campaign.findById(campaignId);
+                await createCampaignScript(content, req.user._id, campaignId, existingCampaign?.isActive ?? false);
             }
         } else {
             if (heading !== undefined) variant.heading = heading;

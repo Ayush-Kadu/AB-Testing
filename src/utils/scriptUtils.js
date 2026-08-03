@@ -1004,12 +1004,17 @@ const createMainScript = async (user) => {
 
 
     try {
+        // Written to disk too (useful locally), but the upsert below into
+        // Mongo is what actually matters in production — Render's
+        // filesystem is ephemeral, so a record that only says "this script
+        // is registered" without the content itself is not enough to
+        // survive a redeploy.
         await fs.writeFile(filePath, script, 'utf8');
-        const isExists = await scriptModel.findOne({ name: fileName })
-
-        if (!isExists) {
-            await scriptModel.create({ name: fileName, userId: user._id, isActive: true })
-        }
+        await scriptModel.updateOne(
+            { name: fileName },
+            { $set: { userId: user._id, isActive: true, content: script } },
+            { upsert: true }
+        );
     } catch (error) {
         console.error('Error writing file:', error);
     }

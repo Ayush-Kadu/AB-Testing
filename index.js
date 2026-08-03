@@ -10,6 +10,7 @@ const { startScheduler } = require('./src/scheduler/campaignScheduler');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./src/configs/db');
+const scriptModel = require('./src/models/scriptModel');
 const route = require('./src/routes/routes');
 const moment = require('moment-timezone');
 const bodyParser = require('body-parser');
@@ -75,6 +76,24 @@ app.use(cors({
 }));
 app.set('trust proxy', 1);
 // app.use(limiter);
+
+// Per-campaign and per-client (`-main.js`) scripts are stored in Mongo
+// (see scriptModel.js) — that's what actually survives a redeploy, since
+// Render's filesystem is ephemeral. Check the DB first; anything not found
+// there falls through to express.static below, which covers the
+// hand-written utility scripts (form tracking, etc.) that are committed to
+// git and don't need database backing.
+app.get('/scripts/:filename', async (req, res, next) => {
+  try {
+    const doc = await scriptModel.findOne({ name: req.params.filename, isDelete: { $ne: true } }).select('content');
+    if (doc && doc.content) {
+      return res.type('application/javascript').send(doc.content);
+    }
+  } catch (err) {
+    console.error('[scripts] DB lookup failed, falling back to static file:', err.message);
+  }
+  next();
+});
 app.use('/scripts', express.static(path.join(__dirname, 'src/scripts')));
 
 
