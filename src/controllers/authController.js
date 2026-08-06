@@ -920,12 +920,20 @@ exports.savePushSubscription = async (req, res, next) => {
 
 const webpush = require("web-push");
 
-// Set VAPID keys
-webpush.setVapidDetails(
-  "mailto:sanjiv.ranjan@technians.com",
-  "BJ0wd3yMehxh_RjMa0UJ1HHGS4_bsViADz5ryOb9R7GKQ95970GuI_pcVy8oXAkrR3J7PnTDR8_R7ww99ON4lCc", // public
-  "N_R45fdgODawxysrRJrAF0dRTI40zEHgJGJC-IAhAss" // private
-);
+// Passed per-call to sendNotification() below instead of via the
+// module-level webpush.setVapidDetails() — that call sets shared,
+// process-wide state in the web-push package itself, and
+// pushNotification.service.js (the separate dashboard-reminder push
+// feature) also calls it, with a different key pair. Whichever call runs
+// last at require-time used to silently win for the whole process,
+// breaking whichever feature didn't "win" with a 403 from the push
+// service (signing with the wrong private key for a given subscription).
+const vapidDetails = {
+  subject: process.env.VISITOR_VAPID_SUBJECT,
+  publicKey: process.env.VISITOR_VAPID_PUBLIC_KEY,
+  privateKey: process.env.VISITOR_VAPID_PRIVATE_KEY,
+};
+
 exports.sendPushNotification = async (req, res, next) => {
   try {
     const { websiteId, filters = {}, payload } = req.body;
@@ -960,7 +968,7 @@ exports.sendPushNotification = async (req, res, next) => {
     // Send notifications in parallel
     const results = await Promise.all(
       subscriptions.map(sub =>
-        webpush.sendNotification(sub, JSON.stringify(payload))
+        webpush.sendNotification(sub, JSON.stringify(payload), { vapidDetails })
           .then(() => ({ endpoint: sub.endpoint, success: true }))
           .catch(err => {
             console.error(`Failed for endpoint: ${sub.endpoint}`, err);

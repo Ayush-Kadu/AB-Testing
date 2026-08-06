@@ -273,7 +273,7 @@ exports.getScripts = async (req, res, next) => {
             pushScript = `(function() {
   if (!('serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window)) return;
 
-  const VAPID_PUBLIC_KEY = 'BJ0wd3yMehxh_RjMa0UJ1HHGS4_bsViADz5ryOb9R7GKQ95970GuI_pcVy8oXAkrR3J7PnTDR8_R7ww99ON4lCc';
+  const VAPID_PUBLIC_KEY = '${process.env.VISITOR_VAPID_PUBLIC_KEY}';
   const STORAGE_KEY = 'push_banner_shown_${websiteId}';
   const BANNER_HIDE_DAYS = 7;
 

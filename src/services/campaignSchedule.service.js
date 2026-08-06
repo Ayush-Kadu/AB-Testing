@@ -79,7 +79,7 @@ async function assertOwnedCampaign(campaignId, clientId) {
   return campaign;
 }
 
-async function scheduleCampaign({ campaignId, clientId, scheduledBy, ...input }) {
+async function scheduleCampaign({ campaignId, clientId, scheduledBy,notifyBeforeStart = false, ...input }) {
   const campaign = await assertOwnedCampaign(campaignId, clientId);
 
   const existingStatus = campaign.schedule?.status || "unscheduled";
@@ -105,7 +105,9 @@ async function scheduleCampaign({ campaignId, clientId, scheduledBy, ...input })
     publishedAt: null,
     cancelledAt: null,
     scheduledBy: scheduledBy || null,
-    scheduledAt: new Date()
+    scheduledAt: new Date(),
+    notifyBeforeStart: notifyBeforeStart || false,
+    notificationSent: false,
   };
 
   return repo.saveSchedule(campaignId, schedule);
@@ -131,7 +133,9 @@ async function updateSchedule({ campaignId, clientId, ...input }) {
     publishedAt: null,
     cancelledAt: null,
     scheduledBy: campaign.schedule?.scheduledBy || null,
-    scheduledAt: new Date()
+    scheduledAt: new Date(),
+    notifyBeforeStart: input.notifyBeforeStart ?? false,
+    notificationSent: false,
   };
 
   return repo.saveSchedule(campaignId, schedule);

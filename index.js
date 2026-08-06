@@ -23,6 +23,8 @@ require('dotenv').config();
 const path = require('path');
 app.use(fileUpload());
 require("./src/jobs/subscriptionJob"); //   this runs the cron for alert of subscription
+const pushSubscriptionRoutes = require("./src/routes/pushSubscription.routes");
+const notificationRoutes = require("./src/routes/notification.routes");
 
 //const subscriptionJob = require('./src/jobs/subscriptionJob');
 const limiter = rateLimit({
@@ -188,6 +190,8 @@ app.use('/api/v2/campaign', campaignRoute);
 app.use('/api/v2/visitors', visitorsRoute);
 app.use('/api/v2/script', scriptRoute);
 app.use('/api/v2/campaign-schedule', campaignScheduleRoute);
+app.use('/api/push-subscriptions', pushSubscriptionRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 app.listen(port, async () => {
   try {
@@ -206,6 +210,5 @@ app.listen(port, async () => {
     console.log("error", error);
   }
 });
-
 
 app.use(errorMiddleware)

@@ -151,6 +151,14 @@ schedule: {
         enum: ["unscheduled", "scheduled", "publishing", "published", "failed", "cancelled", "completed"],
         default: "unscheduled"
     },
+    notifyBeforeStart: {
+        type: Boolean,
+        default: false,
+    },
+    notificationSent: {
+        type: Boolean,
+        default: false,
+    },
     attempts: {
         type: Number,
         default: 0
@@ -183,7 +191,7 @@ schedule: {
     scheduledAt: {
         type: Date,
         default: null
-    }
+    },   
 }
 
   },

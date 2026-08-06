@@ -2,9 +2,9 @@ const webpush = require('web-push');
 
 // VAPID keys – use your own keys
 webpush.setVapidDetails(
-  'mailto:sanjiv.ranjan@technians.com',
-  'BJ0wd3yMehxh_RjMa0UJ1HHGS4_bsViADz5ryOb9R7GKQ95970GuI_pcVy8oXAkrR3J7PnTDR8_R7ww99ON4lCc', // public key
-  'N_R45fdgODawxysrRJrAF0dRTI40zEHgJGJC-IAhAss'  // private key
+  process.env.VAPID_SUBJECT, // contact email
+  process.env.VAPID_PUBLIC_KEY, // public key
+  process.env.VAPID_PRIVATE_KEY // private key
 );
 
 // Send notification to a single subscription

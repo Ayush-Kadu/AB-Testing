@@ -90,6 +90,49 @@ async function findDueCampaigns(now, batchSize = 50) {
     .limit(batchSize);
 }
 
+/**
+ * Campaigns that need a reminder notification.
+ *
+ * Returns campaigns:
+ * - scheduled
+ * - reminder enabled
+ * - reminder not yet sent
+ * - starting within the next 5 minutes
+ */
+async function findCampaignsForReminder(
+  now,
+  fiveMinutesLater,
+  batchSize = 50
+) {
+  return Campaign.find({
+    "schedule.status": "scheduled",
+    "schedule.notifyBeforeStart": true,
+    "schedule.notificationSent": false,
+    "schedule.startAt": {
+      $gte: now,
+      $lte: fiveMinutesLater,
+    },
+  })
+    .select(SCHEDULE_FIELDS)
+    .sort({
+      "schedule.startAt": 1,
+    })
+    .limit(batchSize);
+}
+
+// Atomic claim for the reminder step — same shape as claimForPublishing
+// below: only succeeds if notificationSent is still false at the moment of
+// the update, so two overlapping ticks (or two instances) racing for the
+// same campaign can't both send a reminder. Called *before* sending, so a
+// lost race skips the send entirely instead of risking a duplicate.
+async function markReminderSent(campaignId) {
+  return Campaign.findOneAndUpdate(
+    { _id: campaignId, "schedule.notificationSent": false },
+    { $set: { "schedule.notificationSent": true } },
+    { new: true }
+  ).select(SCHEDULE_FIELDS);
+}
+
 // Atomic claim: only succeeds if the campaign is still "scheduled" at the
 // moment of the update. If two scheduler ticks (or two server instances
 // running the same cron) race for the same campaign, only one of these
@@ -234,5 +277,7 @@ module.exports = {
   markCompleted,
   findCampaignsWithWeekendExclusion,
   pauseForWeekend,
-  resumeFromWeekend
+  resumeFromWeekend,
+  findCampaignsForReminder,
+  markReminderSent,
 };

@@ -26,8 +26,43 @@ const scheduleService = require("../services/campaignSchedule.service");
 const DEFAULT_CRON_EXPRESSION = "* * * * *"; // every minute
 const BATCH_SIZE = 50;
 
+const notificationService = require("../services/notification.service");
+const pushNotificationService = require("../services/pushNotification.service");
+
+// Atomically claims the reminder (see repo.markReminderSent) before doing
+// anything else — a lost race just returns early, no duplicate send. Left
+// to throw on failure so Promise.allSettled in runDueCampaigns can isolate
+// it from the other campaigns in the same batch, same as publishDueCampaign
+// and stopExpiredCampaign below.
+async function sendReminder(campaign) {
+  const claimed = await repo.markReminderSent(campaign._id);
+  if (!claimed) {
+    return;
+  }
+
+  const notification = await notificationService.sendCampaignReminder(campaign);
+  await pushNotificationService.sendBrowserPush(notification);
+}
+
 async function runDueCampaigns({ isStartupCatchup = false } = {}) {
   const now = new Date();
+  const fiveMinutesLater = new Date(now.getTime() + 5 * 60 * 1000);
+
+  const upcomingCampaigns =
+  await repo.findCampaignsForReminder(
+    now,
+    fiveMinutesLater,
+    BATCH_SIZE
+  );
+
+  if (upcomingCampaigns.length) {
+    const reminderResults = await Promise.allSettled(upcomingCampaigns.map((campaign) => sendReminder(campaign)));
+    const reminderErrored = reminderResults.filter((r) => r.status === "rejected");
+    if (reminderErrored.length) {
+      reminderErrored.forEach((r) => console.error("[scheduler] Unexpected error sending a reminder:", r.reason));
+    }
+  }
+
   const due = await repo.findDueCampaigns(now, BATCH_SIZE);
 
   if (due.length) {
